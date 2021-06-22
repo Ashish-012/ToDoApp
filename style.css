@@ -1,0 +1,161 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+
+.container{
+}
+
+.top{
+    
+    height: 13vh;
+    width: 100%;
+    background-color: rgb(46, 45, 45);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    
+}
+
+.colours {
+    background-color: rgb(110, 107, 107);
+    display: flex;
+    min-width: 25%;
+    height: 50%;
+    border-radius: 50px;
+    justify-content: space-evenly;
+    align-items: center;
+    box-shadow: 5px 5px 5px #242323;
+    transition: transform 0.8s;
+
+
+}
+.colours:hover{
+    transform: scale(1.04);
+}
+
+.red {
+    background-color: red !important;
+    
+}
+
+.green {
+    background-color: green !important;
+}
+
+.blue {
+    background-color: blue !important;
+}
+
+.grey {
+    background-color: rgb(83, 79, 79) !important;
+}
+
+.cols{
+    height: 60%;
+    width: 8%;
+    transition: transform 0.5s;
+    opacity: 0.5;
+    box-shadow: 5px 5px 5px #242323;
+}
+.cols:hover{
+    transform: scale(1.2);
+    opacity: 1;
+    cursor: pointer;
+}
+
+.fas {
+    color: white;
+    font-size: 1.5rem;
+    opacity: 0.5;
+    transition: transform 0.5s;
+  }
+
+.fas:hover{
+    opacity: 1;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.create {
+    width: 4%;
+    height: 60%;
+    background-color: rgb(110, 107, 107);
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 5px 5px 5px #1b1b1b;
+    transition: transform 0.8s;
+}
+
+.create:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.bottom{
+    background-color: #596e77;
+    min-height: 87vh;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    grid-gap: 20px;
+    
+}
+.bottom-container{
+    display: flex;
+    position: absolute;
+    height: 25rem;
+    width: 30rem;
+    top: 15rem;
+    left: calc((100vw - 30rem)/2);
+    box-shadow: 0 0 20px rgb(0 0 0 / 80%);
+    transition: transform 0.8s;
+}
+
+.bottom-container:hover{
+    transform: scale(1.1);
+}
+
+.bot-container:focus{
+    transform: scale(4);
+}
+
+.main-text {
+    width: 75%;
+    background-color: rgb(25, 26, 25);
+    outline: none;
+    padding: 2rem;
+    font-size: 2rem;
+    color: white;
+    overflow: auto;
+}
+
+.main-color{
+    background-color: rgb(41, 41, 43);
+    width: 30%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    outline: none;
+}
+
+.bot-box{
+    width: 40%;
+    height: 10%;
+    transition: transform 0.5s;
+    opacity: 0.5;
+    box-shadow: 12px 12px 12px #161616;
+    border: none;
+}
+
+.bot-box:hover{
+    transform: scale(1.2);
+    cursor: pointer;
+    opacity: 1;
+}
+
