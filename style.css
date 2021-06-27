@@ -36,16 +36,16 @@
 }
 
 .red {
-    background-color: red !important;
+    background-color: rgb(141, 36, 62) !important;
     
 }
 
 .green {
-    background-color: green !important;
+    background-color: rgb(29, 99, 29) !important;
 }
 
 .blue {
-    background-color: blue !important;
+    background-color: rgb(25, 81, 119) !important;
 }
 
 .grey {
