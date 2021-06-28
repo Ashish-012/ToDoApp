@@ -159,3 +159,36 @@
     opacity: 1;
 }
 
+.notes{
+    height: 25vh;
+    border: 1px solid black;
+    width: 25vw;
+    background-color: white;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 0 0 20px rgb(0 0 0 / 80%);
+
+}
+
+.notesColor{
+    height: 10%;
+    background-color: rgb(44, 113, 141);
+}
+
+.notesId{
+    font-weight: bold;
+}
+
+.notesText{
+    
+    word-break: break-all;
+    padding: 5%;
+    text-align: center;
+    margin-top: 3%;
+    
+}
+
+.active-filter{
+    border: 1px solid gold;
+    opacity: 1;
+}
