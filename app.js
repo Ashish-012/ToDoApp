@@ -8,6 +8,7 @@ let filterColours = {
 let allFilters = document.querySelectorAll('.colours div');
 let botColor = document.querySelector('.bottom');
 let createBox = document.querySelector('.create');
+let activeFilter = "red";
 
 
 // open the middle box when the plus button is clicked
@@ -20,7 +21,6 @@ for(let i = 0; i< allFilters.length; i++){
 function chooseColor(e){
     let chosenColor = e.target.classList[0];
     botColor.style.backgroundColor = filterColours[chosenColor];
-
 }
 
 // function to create main box  
@@ -35,16 +35,54 @@ function createBoxFunc(e){
                             Enter your task here.
                             </div>
                             <div class = 'main-color'>
-                                <div class="red bot-box"></div>
-                                <div class="green bot-box"></div>
-                                <div class="blue bot-box"></div>
-                                <div class="grey bot-box"></div>
+                                <div class="bot-box red active-filter"></div>
+                                <div class="bot-box green"></div>
+                                <div class="bot-box blue"></div>
+                                <div class="bot-box grey"></div>
                             </div>
                             `
     
     bottomDiv.querySelector('.main-text').addEventListener('click', resetText);
+    bottomDiv.querySelector('.main-text').addEventListener('keypress', keyPressed);
+    let botColors = bottomDiv.querySelectorAll('.bot-box');
+    for(let i = 0; i< botColors.length; i++){
+        botColors[i].addEventListener('click', changeColor);
+    }
+    
     botColor.append(bottomDiv);
     
+}
+
+function keyPressed(e){
+    
+    if(e.key == "Enter"){
+        console.log(e); 
+
+        
+        let typedData = e.target.innerText;
+        let newNote = document.createElement('div');
+        
+        newNote.classList.add("notes");
+        newNote.innerHTML = `<div class = "notesColor ${activeFilter}"></div>
+                            <div class = "notesId">#S@mple</div>
+                            <div class = "notesText">${typedData}</div>`;
+        
+        e.target.parentNode.remove();
+        botColor.append(newNote);
+        activeFilter = "red";
+    }
+}
+
+
+function changeColor(e){
+    selectedFilter = e.target.classList[1];
+    if(activeFilter == selectedFilter){
+        return;
+    }
+    activeFilter = selectedFilter;
+    document.querySelector(".active-filter").classList.remove('active-filter');
+    e.target.classList.add('active-filter');
+
 }
 
 // function to reset the text inside the box
