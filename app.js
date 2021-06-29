@@ -11,6 +11,24 @@ let createBox = document.querySelector('.create');
 let activeFilter = "red";
 
 
+function loadNotes(){
+    if(localStorage.getItem('createdNotes')){
+        let allNotes = JSON.parse(localStorage.getItem('createdNotes'));
+        for(let i=0; i< allNotes.length; i++){
+            let {activeFilter, uniqueId, typedData} = allNotes[i];
+            let newNote = document.createElement('div');
+            newNote.classList.add("notes");
+            newNote.innerHTML = `<div class = "notesColor ${activeFilter}"></div>
+                                <div class = "notesId">#${uniqueId}</div>
+                                <div class = "notesText">${typedData}</div>`;
+            botColor.append(newNote);
+        }
+    }
+}
+
+// to load all the previously added notes from localstorage
+loadNotes();
+
 // open the middle box when the plus button is clicked
 createBox.addEventListener('click', createBoxFunc);
 
@@ -43,7 +61,7 @@ function createBoxFunc(e){
                             `
     
     bottomDiv.querySelector('.main-text').addEventListener('click', resetText);
-    bottomDiv.querySelector('.main-text').addEventListener('keypress', keyPressed);
+    bottomDiv.querySelector('.main-text').addEventListener('keypress', createNote);
     let botColors = bottomDiv.querySelectorAll('.bot-box');
     for(let i = 0; i< botColors.length; i++){
         botColors[i].addEventListener('click', changeColor);
@@ -53,22 +71,42 @@ function createBoxFunc(e){
     
 }
 
-function keyPressed(e){
+function createNote(e){
     
-    if(e.key == "Enter"){
-        console.log(e); 
-
-        
+    if(e.key == "Enter"){ 
+   
         let typedData = e.target.innerText;
         let newNote = document.createElement('div');
-        
+        let uniqueId = uid();
+
         newNote.classList.add("notes");
         newNote.innerHTML = `<div class = "notesColor ${activeFilter}"></div>
-                            <div class = "notesId">#S@mple</div>
+                            <div class = "notesId">#${uniqueId}</div>
                             <div class = "notesText">${typedData}</div>`;
         
         e.target.parentNode.remove();
         botColor.append(newNote);
+
+        if(!localStorage.getItem('createdNotes')){
+            let createdNotes = [];
+            let notesObject = {};
+            notesObject.activeFilter = activeFilter;
+            notesObject.uniqueId = uniqueId;
+            notesObject.typedData = typedData;
+            createdNotes.push(notesObject);
+
+            localStorage.setItem('createdNotes', JSON.stringify(createdNotes));
+        }
+        else{
+            let createdNotes = JSON.parse(localStorage.getItem('createdNotes'));
+            let notesObject = {};
+            notesObject.activeFilter = activeFilter;
+            notesObject.uniqueId = uniqueId;
+            notesObject.typedData = typedData;
+            createdNotes.push(notesObject);
+
+            localStorage.setItem('createdNotes', JSON.stringify(createdNotes));
+        }
         activeFilter = "red";
     }
 }
