@@ -8,10 +8,12 @@ let filterColours = {
 let allFilters = document.querySelectorAll('.colours div');
 let botColor = document.querySelector('.bottom');
 let createBox = document.querySelector('.create');
+
 let activeFilter = "red";
 
 
 function loadNotes(){
+    botColor.innerHTML = "";
     if(localStorage.getItem('createdNotes')){
         let allNotes = JSON.parse(localStorage.getItem('createdNotes'));
         for(let i=0; i< allNotes.length; i++){
@@ -19,11 +21,34 @@ function loadNotes(){
             let newNote = document.createElement('div');
             newNote.classList.add("notes");
             newNote.innerHTML = `<div class = "notesColor ${activeFilter}"></div>
-                                <div class = "notesId">#${uniqueId}</div>
+                                <div class = 'notesTop'>
+                                    <div class = "notesId">#${uniqueId}</div>
+                                    <div class = "delete"><i class="fas fa-trash" id = "${uniqueId}"></i> </div>
+                                </div>
                                 <div class = "notesText">${typedData}</div>`;
+            
+            newNote.querySelector('.delete i').addEventListener('click', deleteThisNote);
+            // botColor.style.backgroundColor = filterColours[chosenColor];
             botColor.append(newNote);
         }
+        
     }
+}
+
+function deleteThisNote(e){
+    if(document.querySelector('.active-filter')){
+        document.querySelector('.active-filter').classList.remove('active-filter');
+        
+    }
+    let noteId = e.target.id;
+    let createdNotes = JSON.parse(localStorage.getItem('createdNotes'));
+    let modifiedNotes = createdNotes.filter(function(noteObject){
+        if(noteObject.uniqueId != noteId){
+            return true;
+        } 
+    });
+    localStorage.setItem('createdNotes', JSON.stringify(modifiedNotes));
+    loadNotes();
 }
 
 // to load all the previously added notes from localstorage
@@ -32,15 +57,57 @@ loadNotes();
 // open the middle box when the plus button is clicked
 createBox.addEventListener('click', createBoxFunc);
 
+
 for(let i = 0; i< allFilters.length; i++){
     allFilters[i].addEventListener('click', chooseColor)
 }
 
+
+
 function chooseColor(e){
+
+    if(e.target.classList.contains('active-filter')){
+        e.target.classList.remove('active-filter');
+        loadNotes();
+        return;
+    }
     let chosenColor = e.target.classList[0];
-    botColor.style.backgroundColor = filterColours[chosenColor];
+    if(document.querySelector('.active-filter')){
+        document.querySelector('.active-filter').classList.remove('active-filter');
+        
+    }
+    e.target.classList.add('active-filter');
+
+    if(localStorage.getItem('createdNotes')){
+        let createdNotes = JSON.parse(localStorage.getItem('createdNotes'));
+        let filterColor = e.target.classList[0];
+        let filteredNotes = createdNotes.filter(function(notesObject){
+            return notesObject.activeFilter == filterColor;
+        })
+
+        filterNotes(filteredNotes);
+    }
+
+    
+
 }
 
+function filterNotes(filteredNotes){
+    botColor.innerHTML = "";
+    for(let i=0; i< filteredNotes.length; i++){
+        let {activeFilter, uniqueId, typedData} = filteredNotes[i];
+        let newNote = document.createElement('div');
+        newNote.classList.add("notes");
+        newNote.innerHTML = `<div class = "notesColor ${activeFilter}"></div>
+                            <div class = 'notesTop'>
+                            <div class = "notesId">#${uniqueId}</div>
+                            <div class = "delete"><i class="fas fa-trash" id = "${uniqueId}"></i> </div>
+                            </div>
+                            <div class = "notesText">${typedData}</div>`;
+        newNote.querySelector('.delete i').addEventListener('click', deleteThisNote);
+        botColor.append(newNote);
+    }
+}
 // function to create main box  
 function createBoxFunc(e){
     let modal = document.querySelector(".bottom-container");
@@ -50,9 +117,10 @@ function createBoxFunc(e){
     let bottomDiv = document.createElement("div");
     bottomDiv.classList.add("bottom-container");
     bottomDiv.innerHTML = ` <div class = 'main-text' contenteditable="true" data-typed = "False">
-                            Enter your task here.
+                            Enter your note here.
                             </div>
                             <div class = 'main-color'>
+                                <div class="close"><i class="fas fa-times"></i> </div>
                                 <div class="bot-box red active-filter"></div>
                                 <div class="bot-box green"></div>
                                 <div class="bot-box blue"></div>
@@ -62,13 +130,17 @@ function createBoxFunc(e){
     
     bottomDiv.querySelector('.main-text').addEventListener('click', resetText);
     bottomDiv.querySelector('.main-text').addEventListener('keypress', createNote);
+    bottomDiv.querySelector('.close i').addEventListener('click', closeMainBox);
     let botColors = bottomDiv.querySelectorAll('.bot-box');
     for(let i = 0; i< botColors.length; i++){
         botColors[i].addEventListener('click', changeColor);
     }
     
     botColor.append(bottomDiv);
-    
+}
+
+function closeMainBox(e){
+    e.target.parentNode.parentNode.parentNode.remove();
 }
 
 function createNote(e){
@@ -81,7 +153,10 @@ function createNote(e){
 
         newNote.classList.add("notes");
         newNote.innerHTML = `<div class = "notesColor ${activeFilter}"></div>
-                            <div class = "notesId">#${uniqueId}</div>
+                            <div class = 'notesTop'>
+                                <div class = "notesId">#${uniqueId}</div>
+                                <div class = "delete"><i class="fas fa-trash" id = "${uniqueId}"></i> </div>
+                            </div>
                             <div class = "notesText">${typedData}</div>`;
         
         e.target.parentNode.remove();
@@ -108,6 +183,7 @@ function createNote(e){
             localStorage.setItem('createdNotes', JSON.stringify(createdNotes));
         }
         activeFilter = "red";
+        loadNotes();
     }
 }
 
@@ -118,7 +194,7 @@ function changeColor(e){
         return;
     }
     activeFilter = selectedFilter;
-    document.querySelector(".active-filter").classList.remove('active-filter');
+    document.querySelector(".bot-box.active-filter").classList.remove('active-filter');
     e.target.classList.add('active-filter');
 
 }
