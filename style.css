@@ -175,8 +175,13 @@
     background-color: rgb(44, 113, 141);
 }
 
-.notesId{
+.notesTop{
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 2%;
     font-weight: bold;
+    display: flex;
+    justify-content: space-between;
 }
 
 .notesText{
@@ -191,4 +196,16 @@
 .active-filter{
     border: 1px solid gold;
     opacity: 1;
+}
+
+.fas.fa-trash{
+    color: red;
+    font-size: 1.5rem;
+    opacity: 0.5;
+    transition: transform 0.5s;
+    
+}
+
+.fas.fa-times{
+    color: red;
 }
