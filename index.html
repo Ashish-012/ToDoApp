@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Notes App</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/4030f77275.js" crossorigin="anonymous"></script>
 </head>
@@ -28,7 +28,16 @@
     <script src="https://cdn.jsdelivr.net/npm/short-unique-id@latest/dist/short-unique-id.min.js"></script>
     <script>
         // Instantiate
-        var uid = new ShortUniqueId();
+        function create_UUID(){
+        var dt = new Date().getTime();
+        var uuid = 'xyxyx'.replace(/[xy]/g, function(c) {
+            var r = (dt + Math.random()*16)%16 | 0;
+            dt = Math.floor(dt/16);
+            return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+        });
+        return uuid;
+    }
+        var uid = create_UUID;
     </script>
     <script src="app.js"></script>
 </body>
